@@ -1,4 +1,4 @@
-// Copyright 2016 Google Inc. All Rights Reserved.
+// Copyright 2021 Google Inc. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 //
-#include "grpc_transcoding/http_template.h"
+#include "include/http_template_match/http_template.h"
 #include "gtest/gtest.h"
 
 #include <ostream>
@@ -22,8 +22,8 @@
 #include <vector>
 
 namespace google {
-namespace grpc {
-namespace transcoding {
+namespace http {
+namespace template_match {
 
 typedef std::vector<std::string> Segments;
 typedef HttpTemplate::Variable Variable;
@@ -524,6 +524,6 @@ TEST(HttpTemplate, ParseNonVerbTest) {
   ASSERT_EQ(nullptr, HttpTemplate::Parse("/a/{b=*}/**:"));
 }
 
-}  // namespace transcoding
-}  // namespace grpc
+}  // namespace template_match
+}  // namespace http
 }  // namespace google

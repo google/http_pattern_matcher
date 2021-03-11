@@ -12,8 +12,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef GRPC_TRANSCODING_PATH_MATCHER_NODE_H_
-#define GRPC_TRANSCODING_PATH_MATCHER_NODE_H_
+
+#pragma once
 
 #include <map>
 #include <memory>
@@ -22,8 +22,8 @@
 #include <vector>
 
 namespace google {
-namespace grpc {
-namespace transcoding {
+namespace http {
+namespace template_match {
 
 typedef std::string HttpMethod;
 
@@ -188,8 +188,6 @@ class PathMatcherNode {
   bool wildcard_;
 };
 
-}  // namespace transcoding
-}  // namespace grpc
+}  // namespace template_match
+}  // namespace http
 }  // namespace google
-
-#endif  // GRPC_TRANSCODING_PATH_MATCHER_NODE_H_

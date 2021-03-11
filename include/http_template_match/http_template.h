@@ -1,4 +1,4 @@
-/* Copyright 2016 Google Inc. All Rights Reserved.
+/* Copyright 2021 Google Inc. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,16 +12,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef GRPC_TRANSCODING_HTTP_TEMPLATE_H_
-#define GRPC_TRANSCODING_HTTP_TEMPLATE_H_
+
+#pragma once
 
 #include <memory>
 #include <string>
 #include <vector>
 
 namespace google {
-namespace grpc {
-namespace transcoding {
+namespace http {
+namespace template_match {
 
 class HttpTemplate {
  public:
@@ -66,8 +66,6 @@ class HttpTemplate {
   std::vector<Variable> variables_;
 };
 
-}  // namespace transcoding
-}  // namespace grpc
+}  // namespace template_match
+}  // namespace http
 }  // namespace google
-
-#endif  // GRPC_TRANSCODING_HTTP_TEMPLATE_H_

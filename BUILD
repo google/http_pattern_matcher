@@ -1,4 +1,4 @@
-# Copyright 2021 Google Inc. All Rights Reserved.
+# Copyright 2017 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,25 +14,3 @@
 #
 ################################################################################
 #
-package(default_visibility = ["//visibility:public"])
-
-cc_library(
-    name = "path_matcher_lib",
-    srcs = [
-        "path_matcher_node.cc",
-    ],
-    deps = [
-        ":http_template_lib",
-        "//include/http_template_match:path_matcher_hdr",
-    ],
-)
-
-cc_library(
-    name = "http_template_lib",
-    srcs = [
-        "http_template.cc",
-    ],
-    deps = [
-        "//include/http_template_match:http_template_hdr",
-    ],
-)

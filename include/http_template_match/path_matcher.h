@@ -1,4 +1,4 @@
-/* Copyright 2016 Google Inc. All Rights Reserved.
+/* Copyright 2021 Google Inc. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,8 +12,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef GRPC_TRANSCODING_PATH_MATCHER_H_
-#define GRPC_TRANSCODING_PATH_MATCHER_H_
+
+#pragma once
 
 #include <cstddef>
 #include <memory>
@@ -22,12 +22,12 @@
 #include <unordered_map>
 #include <unordered_set>
 
-#include "http_template.h"
-#include "path_matcher_node.h"
+#include "include/http_template_match/http_template.h"
+#include "include/http_template_match/path_matcher_node.h"
 
 namespace google {
-namespace grpc {
-namespace transcoding {
+namespace http {
+namespace template_match {
 
 template <class Method>
 class PathMatcherBuilder;  // required for PathMatcher constructor
@@ -559,8 +559,6 @@ bool PathMatcherBuilder<Method>::Register(const std::string& http_method,
                   std::unordered_set<std::string>(), method);
 }
 
-}  // namespace transcoding
-}  // namespace grpc
+}  // namespace template_match
+}  // namespace http
 }  // namespace google
-
-#endif  // GRPC_TRANSCODING_PATH_MATCHER_H_

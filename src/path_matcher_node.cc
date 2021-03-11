@@ -1,4 +1,4 @@
-// Copyright 2016 Google Inc. All Rights Reserved.
+// Copyright 2021 Google Inc. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,12 +14,12 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 //
-#include "grpc_transcoding/path_matcher_node.h"
-#include "grpc_transcoding/http_template.h"
+#include "include/http_template_match/path_matcher_node.h"
+#include "include/http_template_match/http_template.h"
 
 namespace google {
-namespace grpc {
-namespace transcoding {
+namespace http {
+namespace template_match {
 
 const char HttpMethod_WILD_CARD[] = "*";
 
@@ -248,6 +248,6 @@ bool PathMatcherNode::GetResultForHttpMethod(
   return false;
 }
 
-}  // namespace transcoding
-}  // namespace grpc
+}  // namespace template_match
+}  // namespace http
 }  // namespace google

@@ -1,4 +1,4 @@
-// Copyright 2016 Google Inc. All Rights Reserved.
+// Copyright 2021 Google Inc. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,11 +18,11 @@
 #include <string>
 #include <vector>
 
-#include "grpc_transcoding/http_template.h"
+#include "include/http_template_match/http_template.h"
 
 namespace google {
-namespace grpc {
-namespace transcoding {
+namespace http {
+namespace template_match {
 
 namespace {
 
@@ -375,6 +375,6 @@ std::unique_ptr<HttpTemplate> HttpTemplate::Parse(const std::string &ht) {
       std::move(p.segments()), std::move(p.verb()), std::move(p.variables())));
 }
 
-}  // namespace transcoding
-}  // namespace grpc
+}  // namespace template_match
+}  // namespace http
 }  // namespace google

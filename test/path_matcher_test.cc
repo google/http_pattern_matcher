@@ -1,4 +1,4 @@
-// Copyright 2016 Google Inc. All Rights Reserved.
+// Copyright 2021 Google Inc. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 //
-#include "grpc_transcoding/path_matcher.h"
+#include "include/http_template_match/path_matcher.h"
 
 #include <memory>
 #include <ostream>
@@ -27,8 +27,8 @@
 using ::testing::ReturnRef;
 
 namespace google {
-namespace grpc {
-namespace transcoding {
+namespace http {
+namespace template_match {
 
 namespace {
 
@@ -847,6 +847,6 @@ TEST_F(PathMatcherTest, VariableBindingsWithQueryParamsAndSystemParams) {
 
 }  // namespace
 
-}  // namespace transcoding
-}  // namespace grpc
+}  // namespace template_match
+}  // namespace http
 }  // namespace google

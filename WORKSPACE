@@ -1,4 +1,4 @@
-# Copyright 2021 Google Inc. All Rights Reserved.
+# Copyright 2016 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,25 +14,27 @@
 #
 ################################################################################
 #
-package(default_visibility = ["//visibility:public"])
 
-cc_library(
-    name = "path_matcher_lib",
-    srcs = [
-        "path_matcher_node.cc",
-    ],
-    deps = [
-        ":http_template_lib",
-        "//include/http_template_match:path_matcher_hdr",
-    ],
+load(
+    "//:repositories.bzl",
+    "protobuf_repositories",
+    "googleapis_repositories",
+    "googletest_repositories",
 )
 
-cc_library(
-    name = "http_template_lib",
-    srcs = [
-        "http_template.cc",
-    ],
-    deps = [
-        "//include/http_template_match:http_template_hdr",
-    ],
+protobuf_repositories()
+
+googletest_repositories()
+
+googleapis_repositories()
+
+load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
+
+protobuf_deps()
+
+load("@com_google_googleapis//:repository_rules.bzl", "switched_rules_by_language")
+
+switched_rules_by_language(
+    name = "com_google_googleapis_imports",
+    cc = True,
 )

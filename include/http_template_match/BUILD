@@ -14,43 +14,33 @@
 #
 ################################################################################
 #
-
 package(default_visibility = ["//visibility:public"])
 
-cc_test(
-    name = "http_template_test",
-    size = "small",
-    srcs = [
-        "http_template_test.cc",
-    ],
-    deps = [
-        "//src:http_template_lib",
-        "@com_google_googletest//:gtest_main",
+cc_library(
+    name = "http_template_hdr",
+    hdrs = [
+        "http_template.h",
     ],
 )
 
-cc_test(
-    name = "path_matcher_test",
-    size = "small",
-    srcs = [
-        "path_matcher_test.cc",
+cc_library(
+    name = "path_matcher_hdr",
+    hdrs = [
+        "path_matcher.h",
+        "path_matcher_node.h",
     ],
     deps = [
-        "//src:path_matcher_lib",
-        "@com_google_googletest//:gtest_main",
+        ":http_template_hdr",
     ],
 )
 
-cc_test(
-    name = "path_matcher_utility_test",
-    size = "small",
-    srcs = [
-        "path_matcher_utility_test.cc",
+cc_library(
+    name = "path_matcher_utility_hdr",
+    hdrs = [
+        "path_matcher_utility.h",
     ],
-    # Need this flag to surpress many un-used template functions
-    copts = ["-Wno-unneeded-internal-declaration"],
     deps = [
-        "//include/http_template_match:path_matcher_utility_hdr",
-        "@com_google_googletest//:gtest_main",
+        ":path_matcher_hdr",
+        "@com_google_googleapis//google/api:http_cc_proto",
     ],
 )
