@@ -15,11 +15,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
 #include "include/http_template_match/http_template.h"
-#include "gtest/gtest.h"
 
 #include <ostream>
 #include <string>
 #include <vector>
+
+#include "gtest/gtest.h"
 
 namespace google {
 namespace http {

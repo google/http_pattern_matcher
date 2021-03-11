@@ -14,11 +14,11 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 //
+#include "include/http_template_match/http_template.h"
+
 #include <cassert>
 #include <string>
 #include <vector>
-
-#include "include/http_template_match/http_template.h"
 
 namespace google {
 namespace http {

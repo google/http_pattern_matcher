@@ -15,6 +15,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
 #include "include/http_template_match/path_matcher_node.h"
+
 #include "include/http_template_match/http_template.h"
 
 namespace google {
