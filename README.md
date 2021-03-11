@@ -14,7 +14,7 @@ bazel test //test/...
 Please format your codes by running:
 
 ```
-script/check-style
+clang-format-10 -style=Google -i include/http_template_match/*.h src/*.cc test/*.cc
 ```
 
 
