@@ -22,12 +22,12 @@
 #include <unordered_map>
 #include <unordered_set>
 
-#include "include/http_template_match/http_template.h"
-#include "include/http_template_match/path_matcher_node.h"
+#include "include/http_pattern_matcher/http_template.h"
+#include "include/http_pattern_matcher/path_matcher_node.h"
 
 namespace google {
 namespace http {
-namespace template_match {
+namespace pattern_matcher {
 
 template <class Method>
 class PathMatcherBuilder;  // required for PathMatcher constructor
@@ -559,6 +559,6 @@ bool PathMatcherBuilder<Method>::Register(const std::string& http_method,
                   std::unordered_set<std::string>(), method);
 }
 
-}  // namespace template_match
+}  // namespace pattern_matcher
 }  // namespace http
 }  // namespace google

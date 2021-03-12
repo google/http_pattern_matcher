@@ -23,7 +23,7 @@
 
 namespace google {
 namespace http {
-namespace template_match {
+namespace pattern_matcher {
 
 typedef std::string HttpMethod;
 
@@ -188,6 +188,6 @@ class PathMatcherNode {
   bool wildcard_;
 };
 
-}  // namespace template_match
+}  // namespace pattern_matcher
 }  // namespace http
 }  // namespace google

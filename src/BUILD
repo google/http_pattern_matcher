@@ -23,7 +23,7 @@ cc_library(
     ],
     deps = [
         ":http_template_lib",
-        "//include/http_template_match:path_matcher_hdr",
+        "//include/http_pattern_matcher:path_matcher_hdr",
     ],
 )
 
@@ -33,6 +33,6 @@ cc_library(
         "http_template.cc",
     ],
     deps = [
-        "//include/http_template_match:http_template_hdr",
+        "//include/http_pattern_matcher:http_template_hdr",
     ],
 )

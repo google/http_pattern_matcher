@@ -50,7 +50,7 @@ cc_test(
     # Need this flag to surpress many un-used template functions
     copts = ["-Wno-unneeded-internal-declaration"],
     deps = [
-        "//include/http_template_match:path_matcher_utility_hdr",
+        "//include/http_pattern_matcher:path_matcher_utility_hdr",
         "@com_google_googletest//:gtest_main",
     ],
 )

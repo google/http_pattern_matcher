@@ -14,7 +14,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 //
-#include "include/http_template_match/http_template.h"
+#include "include/http_pattern_matcher/http_template.h"
 
 #include <ostream>
 #include <string>
@@ -24,7 +24,7 @@
 
 namespace google {
 namespace http {
-namespace template_match {
+namespace pattern_matcher {
 
 typedef std::vector<std::string> Segments;
 typedef HttpTemplate::Variable Variable;
@@ -525,6 +525,6 @@ TEST(HttpTemplate, ParseNonVerbTest) {
   ASSERT_EQ(nullptr, HttpTemplate::Parse("/a/{b=*}/**:"));
 }
 
-}  // namespace template_match
+}  // namespace pattern_matcher
 }  // namespace http
 }  // namespace google

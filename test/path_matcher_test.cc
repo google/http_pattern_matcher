@@ -14,7 +14,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 //
-#include "include/http_template_match/path_matcher.h"
+#include "include/http_pattern_matcher/path_matcher.h"
 
 #include <memory>
 #include <ostream>
@@ -28,7 +28,7 @@ using ::testing::ReturnRef;
 
 namespace google {
 namespace http {
-namespace template_match {
+namespace pattern_matcher {
 
 namespace {
 
@@ -847,6 +847,6 @@ TEST_F(PathMatcherTest, VariableBindingsWithQueryParamsAndSystemParams) {
 
 }  // namespace
 
-}  // namespace template_match
+}  // namespace pattern_matcher
 }  // namespace http
 }  // namespace google

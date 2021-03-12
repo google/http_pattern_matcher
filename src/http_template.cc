@@ -14,7 +14,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 //
-#include "include/http_template_match/http_template.h"
+#include "include/http_pattern_matcher/http_template.h"
 
 #include <cassert>
 #include <string>
@@ -22,7 +22,7 @@
 
 namespace google {
 namespace http {
-namespace template_match {
+namespace pattern_matcher {
 
 namespace {
 
@@ -375,6 +375,6 @@ std::unique_ptr<HttpTemplate> HttpTemplate::Parse(const std::string &ht) {
       std::move(p.segments()), std::move(p.verb()), std::move(p.variables())));
 }
 
-}  // namespace template_match
+}  // namespace pattern_matcher
 }  // namespace http
 }  // namespace google

@@ -14,14 +14,14 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 //
-#include "include/http_template_match/path_matcher_utility.h"
+#include "include/http_pattern_matcher/path_matcher_utility.h"
 
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 using google::api::HttpRule;
-using google::http::template_match::PathMatcherBuilder;
-using google::http::template_match::PathMatcherUtility;
+using google::http::pattern_matcher::PathMatcherBuilder;
+using google::http::pattern_matcher::PathMatcherUtility;
 
 using testing::_;
 using testing::Eq;
@@ -31,7 +31,7 @@ class TestMethod {};
 
 namespace google {
 namespace http {
-namespace template_match {
+namespace pattern_matcher {
 template <>
 class PathMatcherBuilder<const TestMethod*> {
  public:
@@ -39,7 +39,7 @@ class PathMatcherBuilder<const TestMethod*> {
                bool(const std::string&, const std::string&, const std::string&,
                     const std::unordered_set<std::string>&, const TestMethod*));
 };
-}  // namespace template_match
+}  // namespace pattern_matcher
 }  // namespace http
 }  // namespace google
 

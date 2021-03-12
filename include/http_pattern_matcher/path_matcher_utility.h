@@ -16,11 +16,11 @@
 #pragma once
 
 #include "google/api/http.pb.h"
-#include "include/http_template_match/path_matcher.h"
+#include "include/http_pattern_matcher/path_matcher.h"
 
 namespace google {
 namespace http {
-namespace template_match {
+namespace pattern_matcher {
 
 class PathMatcherUtility {
  public:
@@ -85,6 +85,6 @@ bool PathMatcherUtility::RegisterByHttpRule(
   return ok;
 }
 
-}  // namespace template_match
+}  // namespace pattern_matcher
 }  // namespace http
 }  // namespace google

@@ -21,7 +21,7 @@
 
 namespace google {
 namespace http {
-namespace template_match {
+namespace pattern_matcher {
 
 class HttpTemplate {
  public:
@@ -66,6 +66,6 @@ class HttpTemplate {
   std::vector<Variable> variables_;
 };
 
-}  // namespace template_match
+}  // namespace pattern_matcher
 }  // namespace http
 }  // namespace google

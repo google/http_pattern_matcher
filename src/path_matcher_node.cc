@@ -14,13 +14,13 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 //
-#include "include/http_template_match/path_matcher_node.h"
+#include "include/http_pattern_matcher/path_matcher_node.h"
 
-#include "include/http_template_match/http_template.h"
+#include "include/http_pattern_matcher/http_template.h"
 
 namespace google {
 namespace http {
-namespace template_match {
+namespace pattern_matcher {
 
 const char HttpMethod_WILD_CARD[] = "*";
 
@@ -249,6 +249,6 @@ bool PathMatcherNode::GetResultForHttpMethod(
   return false;
 }
 
-}  // namespace template_match
+}  // namespace pattern_matcher
 }  // namespace http
 }  // namespace google
