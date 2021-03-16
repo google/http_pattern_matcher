@@ -157,63 +157,6 @@ class PathMatcherBuilder {
   friend class PathMatcher<Method>;
 };
 
-namespace {
-
-std::vector<std::string>& split(const std::string& s, char delim,
-                                std::vector<std::string>& elems) {
-  std::stringstream ss(s);
-  std::string item;
-  while (std::getline(ss, item, delim)) {
-    elems.push_back(item);
-  }
-  return elems;
-}
-
-inline bool IsReservedChar(char c) {
-  // Reserved characters according to RFC 6570
-  switch (c) {
-    case '!':
-    case '#':
-    case '$':
-    case '&':
-    case '\'':
-    case '(':
-    case ')':
-    case '*':
-    case '+':
-    case ',':
-    case '/':
-    case ':':
-    case ';':
-    case '=':
-    case '?':
-    case '@':
-    case '[':
-    case ']':
-      return true;
-    default:
-      return false;
-  }
-}
-
-// Check if an ASCII character is a hex digit.  We can't use ctype's
-// isxdigit() because it is affected by locale. This function is applied
-// to the escaped characters in a url, not to natural-language
-// strings, so locale should not be taken into account.
-inline bool ascii_isxdigit(char c) {
-  return ('a' <= c && c <= 'f') || ('A' <= c && c <= 'F') ||
-         ('0' <= c && c <= '9');
-}
-
-inline int hex_digit_to_int(char c) {
-  /* Assume ASCII. */
-  int x = static_cast<unsigned char>(c);
-  if (x > '9') {
-    x += 9;
-  }
-  return x & 0xf;
-}
-
 // This is a helper function for UrlUnescapeString. It takes a string and
 // the index of where we are within that string.
 //
@@ -223,70 +166,13 @@ inline int hex_digit_to_int(char c) {
 // If the next three characters are an escaped character then this function will
 // also return what character is escaped.
 bool GetEscapedChar(const std::string& src, size_t i,
-                    UrlUnescapeSpec unescape_spec, char* out) {
-  if (i + 2 < src.size() && src[i] == '%') {
-    if (ascii_isxdigit(src[i + 1]) && ascii_isxdigit(src[i + 2])) {
-      char c =
-          (hex_digit_to_int(src[i + 1]) << 4) | hex_digit_to_int(src[i + 2]);
-      switch (unescape_spec) {
-        case UrlUnescapeSpec::kAllCharactersExceptReserved:
-          if (IsReservedChar(c)) {
-            return false;
-          }
-          break;
-        case UrlUnescapeSpec::kAllCharactersExceptSlash:
-          if (c == '/') {
-            return false;
-          }
-          break;
-        case UrlUnescapeSpec::kAllCharacters:
-          break;
-      }
-      *out = c;
-      return true;
-    }
-  }
-  return false;
-}
+                    UrlUnescapeSpec unescape_spec, char* out);
 
 // Unescapes string 'part' and returns the unescaped string. Reserved characters
 // (as specified in RFC 6570) are not escaped if unescape_reserved_chars is
 // false.
 std::string UrlUnescapeString(const std::string& part,
-                              UrlUnescapeSpec unescape_spec) {
-  std::string unescaped;
-  // Check whether we need to escape at all.
-  bool needs_unescaping = false;
-  char ch = '\0';
-  for (size_t i = 0; i < part.size(); ++i) {
-    if (GetEscapedChar(part, i, unescape_spec, &ch)) {
-      needs_unescaping = true;
-      break;
-    }
-  }
-  if (!needs_unescaping) {
-    unescaped = part;
-    return unescaped;
-  }
-
-  unescaped.resize(part.size());
-
-  char* begin = &(unescaped)[0];
-  char* p = begin;
-
-  for (size_t i = 0; i < part.size();) {
-    if (GetEscapedChar(part, i, unescape_spec, &ch)) {
-      *p++ = ch;
-      i += 3;
-    } else {
-      *p++ = part[i];
-      i += 1;
-    }
-  }
-
-  unescaped.resize(p - begin);
-  return unescaped;
-}
+                              UrlUnescapeSpec unescape_spec);
 
 template <class VariableBinding>
 void ExtractBindingsFromPath(const std::vector<HttpTemplate::Variable>& vars,
@@ -325,6 +211,16 @@ void ExtractBindingsFromPath(const std::vector<HttpTemplate::Variable>& vars,
   }
 }
 
+std::vector<std::string>& StrSplit(const std::string& s, char delim,
+                                   std::vector<std::string>& elems) {
+  std::stringstream ss(s);
+  std::string item;
+  while (std::getline(ss, item, delim)) {
+    elems.push_back(item);
+  }
+  return elems;
+}
+
 template <class VariableBinding>
 void ExtractBindingsFromQueryParameters(
     const std::string& query_params,
@@ -336,7 +232,7 @@ void ExtractBindingsFromQueryParameters(
   // We'll need to ignore these. Example:
   //      book.id=123&book.author=Neal%20Stephenson&api_key=AIzaSyAz7fhBkC35D2M
   std::vector<std::string> params;
-  split(query_params, '&', params);
+  StrSplit(query_params, '&', params);
   for (const auto& param : params) {
     size_t pos = param.find('=');
     if (pos != 0 && pos != std::string::npos) {
@@ -348,7 +244,7 @@ void ExtractBindingsFromQueryParameters(
         // sequence of field names that identify the (potentially deep) field
         // in the request, e.g. `book.author.name`.
         VariableBinding binding;
-        split(name, '.', binding.field_path);
+        StrSplit(name, '.', binding.field_path);
         binding.value = UrlUnescapeString(param.substr(pos + 1),
                                           UrlUnescapeSpec::kAllCharacters);
         bindings->emplace_back(std::move(binding));
@@ -370,54 +266,14 @@ void ExtractBindingsFromQueryParameters(
 // - Collapses extra slashes: "///" --> "/"
 std::vector<std::string> ExtractRequestParts(
     std::string path, const std::unordered_set<std::string>& custom_verbs,
-    std::string& verb) {
-  // Remove query parameters.
-  path = path.substr(0, path.find_first_of('?'));
-
-  // Replace last ':' with '/' to handle custom verb.
-  // But not for /foo:bar/const.
-  std::size_t last_colon_pos = path.find_last_of(':');
-  std::size_t last_slash_pos = path.find_last_of('/');
-  if (last_colon_pos != std::string::npos && last_colon_pos > last_slash_pos) {
-    std::string tmp_verb = path.substr(last_colon_pos + 1);
-    // only verb in the configured custom verbs, treat it as verb
-    if (custom_verbs.find(tmp_verb) != custom_verbs.end()) {
-      verb = tmp_verb;
-      path = path.substr(0, last_colon_pos);
-    }
-  }
-
-  std::vector<std::string> result;
-  if (path.size() > 0) {
-    split(path.substr(1), '/', result);
-  }
-  // Removes all trailing empty parts caused by extra "/".
-  while (!result.empty() && (*(--result.end())).empty()) {
-    result.pop_back();
-  }
-  return result;
-}
+    std::string& verb);
 
 // Looks up on a PathMatcherNode.
 PathMatcherLookupResult LookupInPathMatcherNode(
     const PathMatcherNode& root, const std::vector<std::string>& parts,
-    const HttpMethod& http_method) {
-  PathMatcherLookupResult result;
-  root.LookupPath(parts.begin(), parts.end(), http_method, &result);
-  return result;
-}
+    const HttpMethod& http_method);
 
-PathMatcherNode::PathInfo TransformHttpTemplate(const HttpTemplate& ht) {
-  PathMatcherNode::PathInfo::Builder builder;
-
-  for (const std::string& part : ht.segments()) {
-    builder.AppendLiteralNode(part);
-  }
-
-  return builder.Build();
-}
-
-}  // namespace
+PathMatcherNode::PathInfo TransformHttpTemplate(const HttpTemplate& ht);
 
 template <class Method>
 PathMatcher<Method>::PathMatcher(PathMatcherBuilder<Method>&& builder)

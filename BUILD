@@ -30,6 +30,7 @@ cc_library(
 cc_library(
     name = "path_matcher_lib",
     srcs = [
+        "src/path_matcher.cc",
         "src/path_matcher_node.cc",
     ],
     hdrs = [
@@ -82,8 +83,6 @@ cc_test(
     srcs = [
         "test/path_matcher_utility_test.cc",
     ],
-    # Need this flag to surpress many un-used template functions
-    copts = ["-Wno-unneeded-internal-declaration"],
     deps = [
         "path_matcher_utility_lib",
         "@com_google_googletest//:gtest_main",
