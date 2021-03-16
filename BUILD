@@ -14,3 +14,78 @@
 #
 ################################################################################
 #
+
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+    name = "http_template_lib",
+    srcs = [
+        "src/http_template.cc",
+    ],
+    hdrs = [
+        "include/http_pattern_matcher/http_template.h",
+    ],
+)
+
+cc_library(
+    name = "path_matcher_lib",
+    srcs = [
+        "src/path_matcher_node.cc",
+    ],
+    hdrs = [
+        "include/http_pattern_matcher/path_matcher.h",
+        "include/http_pattern_matcher/path_matcher_node.h",
+    ],
+    deps = [
+        ":http_template_lib",
+    ],
+)
+
+cc_library(
+    name = "path_matcher_utility_lib",
+    hdrs = [
+        "include/http_pattern_matcher/path_matcher_utility.h",
+    ],
+    deps = [
+        ":path_matcher_lib",
+        "@com_google_googleapis//google/api:http_cc_proto",
+    ],
+)
+
+cc_test(
+    name = "http_template_test",
+    size = "small",
+    srcs = [
+        "test/http_template_test.cc",
+    ],
+    deps = [
+        ":http_template_lib",
+        "@com_google_googletest//:gtest_main",
+    ],
+)
+
+cc_test(
+    name = "path_matcher_test",
+    size = "small",
+    srcs = [
+        "test/path_matcher_test.cc",
+    ],
+    deps = [
+        ":path_matcher_lib",
+        "@com_google_googletest//:gtest_main",
+    ],
+)
+
+cc_test(
+    name = "path_matcher_utility_test",
+    size = "small",
+    srcs = [
+        "test/path_matcher_utility_test.cc",
+    ],
+    # Need this flag to surpress many un-used template functions
+    copts = ["-Wno-unneeded-internal-declaration"],
+    deps = [
+        "path_matcher_utility_lib",
+        "@com_google_googletest//:gtest_main",
+    ],
+)

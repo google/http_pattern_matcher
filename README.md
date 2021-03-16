@@ -9,7 +9,7 @@ For contributors:
 If you make any changes, please make sure to use Bazel to pass all unit tests by running:
 
 ```
-bazel test //test/...
+bazel test //...
 ```
 Please format your codes by running:
 
