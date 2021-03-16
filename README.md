@@ -16,5 +16,9 @@ Please format your codes by running:
 ```
 clang-format-10 -style=Google -i include/http_pattern_matcher/*.h src/*.cc test/*.cc
 ```
+## Toolchain
+
+The Bazel build system defaults to using clang 10 to enable reproducible builds.
+
 
 

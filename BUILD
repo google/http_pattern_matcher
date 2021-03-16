@@ -15,6 +15,8 @@
 ################################################################################
 #
 
+load("@rules_fuzzing//fuzzing:cc_defs.bzl", "cc_fuzz_test")
+
 package(default_visibility = ["//visibility:public"])
 
 cc_library(
@@ -63,6 +65,17 @@ cc_test(
     deps = [
         ":http_template_lib",
         "@com_google_googletest//:gtest_main",
+    ],
+)
+
+cc_fuzz_test(
+    name = "http_template_fuzz_test",
+    srcs = [
+        "test/http_template_fuzz_test.cc",
+    ],
+    corpus = glob(["test/http_template_fuzz_test_corpus/**"]),
+    deps = [
+        "//:http_template_lib",
     ],
 )
 
