@@ -39,6 +39,7 @@ cc_library(
     ],
     deps = [
         ":http_template_lib",
+        "@com_google_absl//absl/strings",
     ],
 )
 

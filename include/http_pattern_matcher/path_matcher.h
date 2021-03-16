@@ -22,6 +22,7 @@
 #include <unordered_map>
 #include <unordered_set>
 
+#include "absl/strings/str_split.h"
 #include "include/http_pattern_matcher/http_template.h"
 #include "include/http_pattern_matcher/path_matcher_node.h"
 
@@ -211,16 +212,6 @@ void ExtractBindingsFromPath(const std::vector<HttpTemplate::Variable>& vars,
   }
 }
 
-std::vector<std::string>& StrSplit(const std::string& s, char delim,
-                                   std::vector<std::string>& elems) {
-  std::stringstream ss(s);
-  std::string item;
-  while (std::getline(ss, item, delim)) {
-    elems.push_back(item);
-  }
-  return elems;
-}
-
 template <class VariableBinding>
 void ExtractBindingsFromQueryParameters(
     const std::string& query_params,
@@ -231,8 +222,7 @@ void ExtractBindingsFromQueryParameters(
   // Query parameters may also contain system parameters such as `api_key`.
   // We'll need to ignore these. Example:
   //      book.id=123&book.author=Neal%20Stephenson&api_key=AIzaSyAz7fhBkC35D2M
-  std::vector<std::string> params;
-  StrSplit(query_params, '&', params);
+  std::vector<std::string> params = absl::StrSplit(query_params, '&');
   for (const auto& param : params) {
     size_t pos = param.find('=');
     if (pos != 0 && pos != std::string::npos) {
@@ -244,7 +234,7 @@ void ExtractBindingsFromQueryParameters(
         // sequence of field names that identify the (potentially deep) field
         // in the request, e.g. `book.author.name`.
         VariableBinding binding;
-        StrSplit(name, '.', binding.field_path);
+        binding.field_path = absl::StrSplit(name, '.');
         binding.value = UrlUnescapeString(param.substr(pos + 1),
                                           UrlUnescapeSpec::kAllCharacters);
         bindings->emplace_back(std::move(binding));
