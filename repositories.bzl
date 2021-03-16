@@ -16,6 +16,18 @@
 #
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
+ABSEIL_COMMIT = "99477fa9f1e89a7d8253c8aeee331864710d080c"
+ABSEIL_SHA256 = "495e8e1c481018126b2a84bfe36e273907ce282b135e7d161e138e463d295f3d"
+
+def absl_repositories():
+    http_archive(
+        name = "com_google_absl",
+        strip_prefix = "abseil-cpp-" + ABSEIL_COMMIT,
+        url = "https://github.com/abseil/abseil-cpp/archive/" + ABSEIL_COMMIT + ".tar.gz",
+        sha256 = ABSEIL_SHA256,
+    )
+
+
 PROTOBUF_COMMIT = "3.15.5"  # Mar 04, 2021
 PROTOBUF_SHA256 = "bc3dbf1f09dba1b2eb3f2f70352ee97b9049066c9040ce0c9b67fb3294e91e4b"
 
