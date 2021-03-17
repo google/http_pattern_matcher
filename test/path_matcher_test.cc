@@ -295,7 +295,7 @@ TEST_F(PathMatcherTest, VariableBindings) {
 
   EXPECT_EQ(Lookup("GET", "/a/b/foo", &bindings), ab_);
   EXPECT_EQ(Bindings({
-                Binding{FieldPath{"x"}, "foo"},
+                Binding{FieldPath{"x"}, "bad"},
             }),
             bindings);
 
